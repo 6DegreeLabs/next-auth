@@ -2,7 +2,8 @@ import { EncryptJWT, jwtDecrypt } from "jose"
 import hkdf from "@panva/hkdf"
 import { v4 as uuid } from "uuid"
 import { SessionStore } from "../core/lib/cookie"
-import type { NextApiRequest } from "next"
+import type { GetServerSidePropsContext, NextApiRequest } from "next"
+import type { NextRequest } from "next/server"
 import type { JWT, JWTDecodeParams, JWTEncodeParams, JWTOptions } from "./types"
 import type { LoggerInstance } from ".."
 
@@ -37,7 +38,7 @@ export async function decode(params: JWTDecodeParams): Promise<JWT | null> {
 
 export interface GetTokenParams<R extends boolean = false> {
   /** The request containing the JWT either in the cookies or in the `Authorization` header. */
-  req: NextApiRequest | Pick<NextApiRequest, "cookies" | "headers">
+  req: GetServerSidePropsContext["req"] | NextRequest | NextApiRequest
   /**
    * Use secure prefix for cookie name, unless URL in `NEXTAUTH_URL` is http://
    * or not set (e.g. development or test instance) case use unprefixed name
@@ -65,7 +66,7 @@ export interface GetTokenParams<R extends boolean = false> {
  * [Documentation](https://next-auth.js.org/tutorials/securing-pages-and-api-routes#using-gettoken)
  */
 export async function getToken<R extends boolean = false>(
-  params?: GetTokenParams<R>
+  params: GetTokenParams<R>
 ): Promise<R extends true ? string : JWT | null> {
   const {
     req,
@@ -78,7 +79,7 @@ export async function getToken<R extends boolean = false>(
     decode: _decode = decode,
     logger = console,
     secret = process.env.NEXTAUTH_SECRET,
-  } = params ?? {}
+  } = params
 
   if (!req) throw new Error("Must pass `req` to JWT getToken()")
 
@@ -90,8 +91,13 @@ export async function getToken<R extends boolean = false>(
 
   let token = sessionStore.value
 
-  if (!token && req.headers.authorization?.split(" ")[0] === "Bearer") {
-    const urlEncodedToken = req.headers.authorization.split(" ")[1]
+  const authorizationHeader =
+    req.headers instanceof Headers
+      ? req.headers.get("authorization")
+      : req.headers?.authorization
+
+  if (!token && authorizationHeader?.split(" ")[0] === "Bearer") {
+    const urlEncodedToken = authorizationHeader.split(" ")[1]
     token = decodeURIComponent(urlEncodedToken)
   }
 

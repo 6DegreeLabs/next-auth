@@ -1,6 +1,6 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface GoogleProfile {
+export interface GoogleProfile extends Record<string, any> {
   aud: string
   azp: string
   email: string
@@ -18,7 +18,7 @@ export interface GoogleProfile {
   sub: string
 }
 
-export default function Google<P extends Record<string, any> = GoogleProfile>(
+export default function Google<P extends GoogleProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -36,6 +36,14 @@ export default function Google<P extends Record<string, any> = GoogleProfile>(
         email: profile.email,
         image: profile.picture,
       }
+    },
+    style: {
+      logo: "/google.svg",
+      logoDark: "/google.svg",
+      bgDark: "#fff",
+      bg: "#fff",
+      text: "#000",
+      textDark: "#000",
     },
     options,
   }

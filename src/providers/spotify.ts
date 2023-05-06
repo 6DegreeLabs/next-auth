@@ -4,13 +4,13 @@ export interface SpotifyImage {
   url: string
 }
 
-export interface SpotifyProfile {
+export interface SpotifyProfile extends Record<string, any> {
   id: string
   display_name: string
   email: string
   images: SpotifyImage[]
 }
-export default function Spotify<P extends Record<string, any> = SpotifyProfile>(
+export default function Spotify<P extends SpotifyProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -28,6 +28,14 @@ export default function Spotify<P extends Record<string, any> = SpotifyProfile>(
         email: profile.email,
         image: profile.images?.[0]?.url,
       }
+    },
+    style: {
+      logo: "/spotify.svg",
+      logoDark: "/spotify.svg",
+      bg: "#fff",
+      text: "#2ebd59",
+      bgDark: "#fff",
+      textDark: "#2ebd59",
     },
     options,
   }

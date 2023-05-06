@@ -1,4 +1,3 @@
-/// <reference types="pouchdb-core" />
 /// <reference types="node" />
 import type { Awaitable } from "..";
 export interface DefaultJWT extends Record<string, unknown> {
@@ -21,7 +20,7 @@ export interface JWTEncodeParams {
     secret: string | Buffer;
     /**
      * The maximum age of the NextAuth.js issued JWT in seconds.
-     * @default 30 * 24 * 30 * 60 // 30 days
+     * @default 30 * 24 * 60 * 60 // 30 days
      */
     maxAge?: number;
 }
@@ -40,7 +39,7 @@ export interface JWTOptions {
     secret: string;
     /**
      * The maximum age of the NextAuth.js issued JWT in seconds.
-     * @default 30 * 24 * 30 * 60 // 30 days
+     * @default 30 * 24 * 60 * 60 // 30 days
      */
     maxAge: number;
     /** Override this method to control the NextAuth.js issued JWT encoding. */
@@ -48,4 +47,5 @@ export interface JWTOptions {
     /** Override this method to control the NextAuth.js issued JWT decoding. */
     decode: (params: JWTDecodeParams) => Awaitable<JWT | null>;
 }
-export declare type Secret = string | Buffer;
+export type Secret = string | Buffer;
+//# sourceMappingURL=types.d.ts.map

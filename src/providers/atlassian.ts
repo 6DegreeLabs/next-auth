@@ -1,6 +1,6 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-interface AtlassianProfile {
+interface AtlassianProfile extends Record<string, any> {
   account_id: string
   name: string
   email: string
@@ -30,6 +30,14 @@ export default function Atlassian<P extends AtlassianProfile>(
         email: profile.email,
         image: profile.picture,
       }
+    },
+    style: {
+      logo: "/atlassian.svg",
+      logoDark: "/atlassian-dark.svg",
+      bg: "#0052cc",
+      text: "#fff",
+      bgDark: "#fff",
+      textDark: "#0052cc",
     },
     options,
   }

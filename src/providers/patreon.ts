@@ -1,13 +1,13 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface PatreonProfile {
+export interface PatreonProfile extends Record<string, any> {
   sub: string
   nickname: string
   email: string
   picture: string
 }
 
-export default function Patreon<P extends Record<string, any> = PatreonProfile>(
+export default function Patreon<P extends PatreonProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -28,6 +28,14 @@ export default function Patreon<P extends Record<string, any> = PatreonProfile>(
         email: profile.data.attributes.email,
         image: profile.data.attributes.image_url,
       }
+    },
+    style: {
+      logo: "/patreon.svg",
+      logoDark: "/patreon.svg",
+      bg: "#fff",
+      text: "#e85b46",
+      bgDark: "#000",
+      textDark: "#e85b46",
     },
     options,
   }

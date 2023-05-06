@@ -1,6 +1,6 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface TraktUser {
+export interface TraktUser extends Record<string, any> {
   username: string
   private: boolean
   name: string
@@ -15,9 +15,9 @@ export interface TraktUser {
   images: { avatar: { full: string } }
 }
 
-export default function Trakt<
-  P extends Record<string, any> = TraktUser
->(options: OAuthUserConfig<P>): OAuthConfig<P> {
+export default function Trakt<P extends TraktUser>(
+  options: OAuthUserConfig<P>
+): OAuthConfig<P> {
   return {
     id: "trakt",
     name: "Trakt",
@@ -50,6 +50,14 @@ export default function Trakt<
         email: null, // trakt does not provide user emails
         image: profile.images.avatar.full, // trakt does not allow hotlinking
       }
+    },
+    style: {
+      logo: "/trakt.svg",
+      logoDark: "/trakt-dark.svg",
+      bg: "#fff",
+      text: "#ED2224",
+      bgDark: "#ED2224",
+      textDark: "#fff",
     },
     options,
   }

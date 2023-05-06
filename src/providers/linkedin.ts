@@ -8,7 +8,7 @@ interface Element {
   identifiers?: Identifier[]
 }
 
-export interface LinkedInProfile {
+export interface LinkedInProfile extends Record<string, any> {
   id: string
   localizedFirstName: string
   localizedLastName: string
@@ -19,9 +19,9 @@ export interface LinkedInProfile {
   }
 }
 
-export default function LinkedIn<
-  P extends Record<string, any> = LinkedInProfile
->(options: OAuthUserConfig<P>): OAuthConfig<P> {
+export default function LinkedIn<P extends LinkedInProfile>(
+  options: OAuthUserConfig<P>
+): OAuthConfig<P> {
   return {
     id: "linkedin",
     name: "LinkedIn",
@@ -31,6 +31,9 @@ export default function LinkedIn<
       params: { scope: "r_liteprofile r_emailaddress" },
     },
     token: "https://www.linkedin.com/oauth/v2/accessToken",
+    client: {
+      token_endpoint_auth_method: "client_secret_post",
+    },
     userinfo: {
       url: "https://api.linkedin.com/v2/me",
       params: {
@@ -51,6 +54,14 @@ export default function LinkedIn<
           profile.profilePicture?.["displayImage~"]?.elements?.[0]
             ?.identifiers?.[0]?.identifier,
       }
+    },
+    style: {
+      logo: "/linkedin.svg",
+      logoDark: "/linkedin-dark.svg",
+      bg: "#fff",
+      text: "#069",
+      bgDark: "#069",
+      textDark: "#fff",
     },
     options,
   }

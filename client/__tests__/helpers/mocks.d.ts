@@ -74,4 +74,5 @@ export namespace mockSignOutResponse {
     const url_3: string;
     export { url_3 as url };
 }
-export const server: import("msw/node").SetupServerApi;
+export const server: import("msw/lib/glossary-58eca5a8").z;
+//# sourceMappingURL=mocks.d.ts.map

@@ -1,13 +1,13 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface CognitoProfile {
+export interface CognitoProfile extends Record<string, any> {
   sub: string
   name: string
   email: string
   picture: string
 }
 
-export default function Cognito<P extends Record<string, any> = CognitoProfile>(
+export default function Cognito<P extends CognitoProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -23,6 +23,14 @@ export default function Cognito<P extends Record<string, any> = CognitoProfile>(
         email: profile.email,
         image: profile.picture,
       }
+    },
+    style: {
+      logo: "/cognito.svg",
+      logoDark: "/cognito.svg",
+      bg: "#fff",
+      text: "#C17B9E",
+      bgDark: "#fff",
+      textDark: "#C17B9E",
     },
     options,
   }

@@ -1,10 +1,10 @@
-/// <reference types="node" />
-import type { IncomingHttpHeaders } from "http";
 import type { CookiesOptions } from "../..";
 import type { CookieOption, LoggerInstance, SessionStrategy } from "../types";
+import type { NextRequest } from "next/server";
+import type { NextApiRequest } from "next";
 /** Stringified form of `JWT`. Extract the content with `jwt.decode` */
-export declare type JWTString = string;
-export declare type SetCookieOptions = Partial<CookieOption["options"]> & {
+export type JWTString = string;
+export type SetCookieOptions = Partial<CookieOption["options"]> & {
     expires?: Date | string;
     encode?: (val: unknown) => string;
 };
@@ -12,7 +12,7 @@ export declare type SetCookieOptions = Partial<CookieOption["options"]> & {
  * If `options.session.strategy` is set to `jwt`, this is a stringified `JWT`.
  * In case of `strategy: "database"`, this is the `sessionToken` of the session in the database.
  */
-export declare type SessionToken<T extends SessionStrategy = "jwt"> = T extends "jwt" ? JWTString : string;
+export type SessionToken<T extends SessionStrategy = "jwt"> = T extends "jwt" ? JWTString : string;
 /**
  * Use secure cookies if the site uses HTTPS
  * This being conditional allows cookies to work non-HTTPS development URLs
@@ -29,10 +29,10 @@ export interface Cookie extends CookieOption {
 }
 export declare class SessionStore {
     #private;
-    constructor(option: CookieOption, req: {
-        cookies?: Record<string, string>;
-        headers?: Record<string, string> | IncomingHttpHeaders;
-    }, logger: LoggerInstance | Console);
+    constructor(option: CookieOption, req: Partial<{
+        cookies: NextRequest["cookies"] | NextApiRequest["cookies"];
+        headers: NextRequest["headers"] | NextApiRequest["headers"];
+    }>, logger: LoggerInstance | Console);
     get value(): string;
     /**
      * Given a cookie value, return new cookies, chunked, to fit the allowed cookie size.
@@ -43,3 +43,4 @@ export declare class SessionStore {
     /** Returns a list of cookies that should be cleaned. */
     clean(): Cookie[];
 }
+//# sourceMappingURL=cookie.d.ts.map

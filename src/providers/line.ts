@@ -1,6 +1,6 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface LineProfile {
+export interface LineProfile extends Record<string, any> {
   iss: string
   sub: string
   aud: string
@@ -12,7 +12,7 @@ export interface LineProfile {
   user: any
 }
 
-export default function LINE<P extends Record<string, any> = LineProfile>(
+export default function LINE<P extends LineProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -32,6 +32,14 @@ export default function LINE<P extends Record<string, any> = LineProfile>(
     },
     client: {
       id_token_signed_response_alg: "HS256",
+    },
+    style: {
+      logo: "/line.svg",
+      logoDark: "/line.svg",
+      bg: "#fff",
+      text: "#00C300",
+      bgDark: "#00C300",
+      textDark: "#fff",
     },
     options,
   }

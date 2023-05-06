@@ -1,22 +1,36 @@
-/// <reference types="react" />
+import * as React from "react";
 import { Session } from "..";
 import { CtxOrReq } from "../client/_utils";
-import type { ClientSafeProvider, LiteralUnion, SessionProviderProps, SignInAuthorisationParams, SignInOptions, SignInResponse, SignOutParams, SignOutResponse, UseSessionOptions } from "./types";
+import type { ClientSafeProvider, LiteralUnion, SessionProviderProps, SignInAuthorizationParams, SignInOptions, SignInResponse, SignOutParams, SignOutResponse, UseSessionOptions } from "./types";
 import type { BuiltInProviderType, RedirectableProviderType } from "../providers";
 export * from "./types";
-export declare type SessionContextValue<R extends boolean = false> = R extends true ? {
+type UpdateSession = (data?: any) => Promise<Session | null>;
+export type SessionContextValue<R extends boolean = false> = R extends true ? {
+    update: UpdateSession;
     data: Session;
     status: "authenticated";
 } | {
+    update: UpdateSession;
     data: null;
     status: "loading";
 } : {
+    update: UpdateSession;
     data: Session;
     status: "authenticated";
 } | {
+    update: UpdateSession;
     data: null;
     status: "unauthenticated" | "loading";
 };
+export declare const SessionContext: React.Context<{
+    update: UpdateSession;
+    data: Session;
+    status: "authenticated";
+} | {
+    update: UpdateSession;
+    data: null;
+    status: "unauthenticated" | "loading";
+} | undefined>;
 /**
  * React Hook that gives you access
  * to the logged in user's session data.
@@ -24,7 +38,7 @@ export declare type SessionContextValue<R extends boolean = false> = R extends t
  * [Documentation](https://next-auth.js.org/getting-started/client#usesession)
  */
 export declare function useSession<R extends boolean>(options?: UseSessionOptions<R>): SessionContextValue<R>;
-export declare type GetSessionParams = CtxOrReq & {
+export type GetSessionParams = CtxOrReq & {
     event?: "storage" | "timer" | "hidden" | string;
     triggerEvent?: boolean;
     broadcast?: boolean;
@@ -54,7 +68,7 @@ export declare function getProviders(): Promise<Record<LiteralUnion<BuiltInProvi
  *
  * [Documentation](https://next-auth.js.org/getting-started/client#signin)
  */
-export declare function signIn<P extends RedirectableProviderType | undefined = undefined>(provider?: LiteralUnion<BuiltInProviderType>, options?: SignInOptions, authorizationParams?: SignInAuthorisationParams): Promise<P extends RedirectableProviderType ? SignInResponse | undefined : undefined>;
+export declare function signIn<P extends RedirectableProviderType | undefined = undefined>(provider?: LiteralUnion<P extends RedirectableProviderType ? P | BuiltInProviderType : BuiltInProviderType>, options?: SignInOptions, authorizationParams?: SignInAuthorizationParams): Promise<P extends RedirectableProviderType ? SignInResponse | undefined : undefined>;
 /**
  * Signs the user out, by removing the session cookie.
  * Automatically adds the CSRF token to the request.
@@ -70,3 +84,4 @@ export declare function signOut<R extends boolean = true>(options?: SignOutParam
  * [Documentation](https://next-auth.js.org/getting-started/client#sessionprovider)
  */
 export declare function SessionProvider(props: SessionProviderProps): JSX.Element;
+//# sourceMappingURL=index.d.ts.map

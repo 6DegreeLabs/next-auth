@@ -1,6 +1,6 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
-export interface OktaProfile {
+export interface OktaProfile extends Record<string, any> {
   iss: string
   ver: string
   sub: string
@@ -34,7 +34,7 @@ export interface OktaProfile {
   c_hash: string
 }
 
-export default function Okta<P extends Record<string, any> = OktaProfile>(
+export default function Okta<P extends OktaProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -51,6 +51,14 @@ export default function Okta<P extends Record<string, any> = OktaProfile>(
         email: profile.email,
         image: profile.picture,
       }
+    },
+    style: {
+      logo: "/okta.svg",
+      logoDark: "/okta-dark.svg",
+      bg: "#fff",
+      text: "#000",
+      bgDark: "#000",
+      textDark: "#fff",
     },
     options,
   }

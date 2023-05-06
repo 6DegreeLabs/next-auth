@@ -2,11 +2,11 @@ import { useState } from "react"
 import userEvent from "@testing-library/user-event"
 import { render, screen, waitFor } from "@testing-library/react"
 import { server, mockCSRFToken } from "./helpers/mocks"
-import logger from "../../lib/logger"
+import logger from "../../utils/logger"
 import { getCsrfToken } from "../../react"
 import { rest } from "msw"
 
-jest.mock("../../lib/logger", () => ({
+jest.mock("../../utils/logger", () => ({
   __esModule: true,
   default: {
     warn: jest.fn(),
@@ -45,7 +45,7 @@ test("returns the Cross Site Request Forgery Token (CSRF Token) required to make
 
 test("when there's no CSRF token returned, it'll reflect that", async () => {
   server.use(
-    rest.get("/api/auth/csrf", (req, res, ctx) =>
+    rest.get("*/api/auth/csrf", (req, res, ctx) =>
       res(
         ctx.status(200),
         ctx.json({
@@ -67,7 +67,7 @@ test("when there's no CSRF token returned, it'll reflect that", async () => {
 
 test("when the fetch fails it'll throw a client fetch error", async () => {
   server.use(
-    rest.get("/api/auth/csrf", (req, res, ctx) =>
+    rest.get("*/api/auth/csrf", (req, res, ctx) =>
       res(ctx.status(500), ctx.text("some error happened"))
     )
   )
@@ -79,7 +79,7 @@ test("when the fetch fails it'll throw a client fetch error", async () => {
   await waitFor(() => {
     expect(logger.error).toHaveBeenCalledTimes(1)
     expect(logger.error).toBeCalledWith("CLIENT_FETCH_ERROR", {
-      path: "csrf",
+      url: "/api/auth/csrf",
       error: new SyntaxError("Unexpected token s in JSON at position 0"),
     })
   })

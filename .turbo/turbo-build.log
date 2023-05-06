@@ -1,0 +1,35 @@
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 build C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> pnpm clean && pnpm build:js && pnpm build:css
+
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 clean C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> rm -rf coverage client css utils providers core jwt react next index.d.ts index.js adapters.d.ts middleware.d.ts middleware.js
+
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 build:js C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> pnpm clean && pnpm generate-providers && pnpm tsc --project tsconfig.json && babel --config-file ./config/babel.config.js src --out-dir . --extensions ".tsx,.ts,.js,.jsx"
+
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 clean C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> rm -rf coverage client css utils providers core jwt react next index.d.ts index.js adapters.d.ts middleware.d.ts middleware.js
+
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 generate-providers C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> node ./config/generate-providers.js
+
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+Successfully compiled 111 files with Babel (1341ms).
+ WARN  Issue while reading "C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth\.npmrc". Failed to replace env in config: ${NPM_TOKEN}
+
+> next-auth@4.22.1 build:css C:\Users\Jesse\Documents\GitHub\next-auth\packages\next-auth
+> postcss --config config/postcss.config.js src/**/*.css --base src --dir . && node config/wrap-css.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme

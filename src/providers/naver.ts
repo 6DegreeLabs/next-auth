@@ -1,7 +1,7 @@
 import type { OAuthConfig, OAuthUserConfig } from "."
 
 /** https://developers.naver.com/docs/login/profile/profile.md */
-export interface NaverProfile {
+export interface NaverProfile extends Record<string, any> {
   resultcode: string
   message: string
   response: {
@@ -18,7 +18,7 @@ export interface NaverProfile {
   }
 }
 
-export default function Naver<P extends Record<string, any> = NaverProfile>(
+export default function Naver<P extends NaverProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
@@ -31,7 +31,7 @@ export default function Naver<P extends Record<string, any> = NaverProfile>(
     profile(profile) {
       return {
         id: profile.response.id,
-        name: profile.response.name,
+        name: profile.response.nickname,
         email: profile.response.email,
         image: profile.response.profile_image,
       }
