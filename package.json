@@ -1,6 +1,6 @@
 {
   "name": "next-auth",
-  "version": "4.22.1",
+  "version": "4.23.2",
   "description": "Authentication for Next.js",
   "homepage": "https://next-auth.js.org",
   "repository": "https://github.com/nextauthjs/next-auth.git",
@@ -9,7 +9,7 @@
     "Balázs Orbán <info@balazsorban.com>",
     "Nico Domino <yo@ndo.dev>",
     "Lluis Agusti <hi@llu.lu>",
-    "Thang Huu Vu <thvu@hey.com>"
+    "Thang Huu Vu <hi@thvu.dev>"
   ],
   "main": "index.js",
   "module": "index.js",
@@ -27,19 +27,42 @@
     "nextauth"
   ],
   "exports": {
-    ".": "./index.js",
-    "./jwt": "./jwt/index.js",
-    "./react": "./react/index.js",
-    "./core": "./core/index.js",
-    "./next": "./next/index.js",
-    "./middleware": "./middleware.js",
-    "./client/_utils": "./client/_utils.js",
-    "./providers/*": "./providers/*.js"
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./adapters": {
+      "types": "./adapters.d.ts"
+    },
+    "./jwt": {
+      "types": "./jwt/index.d.ts",
+      "default": "./jwt/index.js"
+    },
+    "./react": {
+      "types": "./react/index.d.ts",
+      "default": "./react/index.js"
+    },
+    "./next": {
+      "types": "./next/index.d.ts",
+      "default": "./next/index.js"
+    },
+    "./middleware": {
+      "types": "./middleware.d.ts",
+      "default": "./middleware.js"
+    },
+    "./client/_utils": {
+      "types": "./client/_utils.d.ts",
+      "default": "./client/_utils.js"
+    },
+    "./providers/*": {
+      "types": "./providers/*.d.ts",
+      "default": "./providers/*.js"
+    }
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:js && pnpm build:css",
     "build:js": "pnpm clean && pnpm generate-providers && pnpm tsc --project tsconfig.json && babel --config-file ./config/babel.config.js src --out-dir . --extensions \".tsx,.ts,.js,.jsx\"",
-    "clean": "rm -rf coverage client css utils providers core jwt react next index.d.ts index.js adapters.d.ts middleware.d.ts middleware.js",
+    "clean": "rm -rf coverage client css utils providers core jwt react next lib ./*.js ./*.ts*",
     "build:css": "postcss --config config/postcss.config.js src/**/*.css --base src --dir . && node config/wrap-css.js",
     "dev": "pnpm clean && pnpm generate-providers && concurrently \"pnpm watch:css\" \"pnpm watch:ts\"",
     "watch:ts": "pnpm tsc --project tsconfig.dev.json",
@@ -70,7 +93,7 @@
     "cookie": "^0.5.0",
     "jose": "^4.11.4",
     "oauth": "^0.9.15",
-    "openid-client": "https://github.com/6DegreeLabs/node-openid-client#36def415d2c4a75d81076c7a86f313ab7e2a4af5",
+    "openid-client": "https://github.com/6DegreeLabs/node-openid-client#c0ddcd6cf8285eb25bf96a5995980b02ff25b38b",
     "preact": "^10.6.3",
     "preact-render-to-string": "^5.1.19",
     "uuid": "^8.3.2"
