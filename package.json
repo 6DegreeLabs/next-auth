@@ -93,7 +93,7 @@
     "cookie": "^0.5.0",
     "jose": "^4.11.4",
     "oauth": "^0.9.15",
-    "openid-client": "https://github.com/6DegreeLabs/node-openid-client#d660dcfe26e6a1dceba73c95540bc3a145b3b901",
+    "openid-client": "https://github.com/6DegreeLabs/node-openid-client#b8ed011b1aff2af02fc51cb738e06e63e8f27dc4",
     "preact": "^10.6.3",
     "preact-render-to-string": "^5.1.19",
     "uuid": "^8.3.2"
